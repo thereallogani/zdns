@@ -11,8 +11,8 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/miekg/dns"
-	"github.com/zmap/zdns"
-	"github.com/zmap/zdns/cachehash"
+	"github.com/thereallogani/zdns"
+	"github.com/thereallogani/zdns/cachehash"
 )
 
 type Answer struct {

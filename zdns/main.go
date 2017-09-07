@@ -23,14 +23,14 @@ import (
 
 	"github.com/miekg/dns"
 	log "github.com/sirupsen/logrus"
-	"github.com/zmap/zdns"
-	_ "github.com/zmap/zdns/modules/alookup"
-	_ "github.com/zmap/zdns/modules/axfr"
-	_ "github.com/zmap/zdns/modules/dmarc"
-	_ "github.com/zmap/zdns/modules/miekg"
-	_ "github.com/zmap/zdns/modules/mxlookup"
-	_ "github.com/zmap/zdns/modules/nslookup"
-	_ "github.com/zmap/zdns/modules/spf"
+	"github.com/thereallogani/zdns"
+	_ "github.com/thereallogani/zdns/modules/alookup"
+	_ "github.com/thereallogani/zdns/modules/axfr"
+	_ "github.com/thereallogani/zdns/modules/dmarc"
+	_ "github.com/thereallogani/zdns/modules/miekg"
+	_ "github.com/thereallogani/zdns/modules/mxlookup"
+	_ "github.com/thereallogani/zdns/modules/nslookup"
+	_ "github.com/thereallogani/zdns/modules/spf"
 )
 
 func main() {

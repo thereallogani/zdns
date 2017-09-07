@@ -20,8 +20,8 @@ import (
 	"strings"
 
 	"github.com/miekg/dns"
-	"github.com/zmap/zdns"
-	"github.com/zmap/zdns/modules/miekg"
+	"github.com/thereallogani/zdns"
+	"github.com/thereallogani/zdns/modules/miekg"
 )
 
 type Result struct {
