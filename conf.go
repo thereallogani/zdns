@@ -32,6 +32,11 @@ type GlobalConf struct {
 	NameServersSpecified bool
 	NameServers          []string
 
+	InputHandler        string
+	InputHandlerConfig  string
+	OutputHandler       string
+	OutputHandlerConfig string
+
 	InputFilePath    string
 	OutputFilePath   string
 	LogFilePath      string

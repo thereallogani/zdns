@@ -18,6 +18,7 @@ import (
 	"flag"
 	"math/rand"
 	"strings"
+	"sync"
 
 	"github.com/miekg/dns"
 	log "github.com/sirupsen/logrus"
@@ -89,6 +90,18 @@ type GlobalLookupFactory interface {
 	RandomNameServer() string
 }
 
+// handle domain input
+type InputHandler interface {
+	Initialize(conf *GlobalConf)
+	FeedChannel(in chan<- interface{}, wg *sync.WaitGroup, zonefileInput bool) error
+}
+
+// handle output results
+type OutputHandler interface {
+	Initialize(conf *GlobalConf)
+	WriteResults(results <-chan string, wg *sync.WaitGroup) error
+}
+
 type BaseGlobalLookupFactory struct {
 	GlobalConf *GlobalConf
 }
@@ -131,11 +144,31 @@ func (s *BaseGlobalLookupFactory) ZonefileInput() bool {
 // keep a mapping from name to factory
 var lookups map[string]GlobalLookupFactory
 
+// keep a mapping from name to input handler
+var inputs map[string]InputHandler
+
+// keep a mapping from name to output handler
+var outputs map[string]OutputHandler
+
 func RegisterLookup(name string, s GlobalLookupFactory) {
 	if lookups == nil {
 		lookups = make(map[string]GlobalLookupFactory, 100)
 	}
 	lookups[name] = s
+}
+
+func RegisterInputHandler(name string, h InputHandler) {
+	if inputs == nil {
+		inputs = make(map[string]InputHandler)
+	}
+	inputs[name] = h
+}
+
+func RegisterOutputHandler(name string, h OutputHandler) {
+	if outputs == nil {
+		outputs = make(map[string]OutputHandler)
+	}
+	outputs[name] = h
 }
 
 func ValidlookupsString() string {
@@ -155,4 +188,20 @@ func GetLookup(name string) GlobalLookupFactory {
 		return nil
 	}
 	return factory
+}
+
+func GetInputHandler(name string) InputHandler {
+	inHandler, ok := inputs[name]
+	if !ok {
+		return nil
+	}
+	return inHandler
+}
+
+func GetOutputHandler(name string) OutputHandler {
+	outHandler, ok := outputs[name]
+	if !ok {
+		return nil
+	}
+	return outHandler
 }
