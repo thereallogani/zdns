@@ -33,6 +33,7 @@ import (
 	_ "github.com/thereallogani/zdns/modules/spf"
 
 	_ "github.com/thereallogani/zdns/iohandlers/file"
+	_ "github.com/thereallogani/zdns/iohandlers/rabbitmq"
 )
 
 func main() {
